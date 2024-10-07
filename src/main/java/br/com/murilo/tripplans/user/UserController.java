@@ -57,4 +57,10 @@ public class UserController {
     public UserVO generateCode(@PathVariable UUID id) {
         return userService.generateCode(id);
     }
+
+    @PostMapping(value = "/login", produces = {"application/json", "application/xml"})
+    @CustomUserUpdateAPIResponse(summary = "Login users", description = "Login user in application")
+    public UserVO logInUser(@RequestBody UserVO user) {
+        return userService.logInUser(user);
+    }
 }

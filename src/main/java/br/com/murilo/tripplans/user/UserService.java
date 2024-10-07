@@ -65,4 +65,14 @@ public class UserService {
         }
         throw new RuntimeException("Code already exists");
     }
+
+    public UserVO logInUser(UserVO user) {
+        User userEntity = userRepository.findByEmail(user.getEmail()).orElseThrow();
+        if (userEntity.getPassword().equals(user.getPassword())) {
+            UserVO vo = DozerMapper.parseObject(userEntity, UserVO.class);
+            vo.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(UserController.class).logInUser(vo)).withSelfRel());
+            return vo;
+        }
+        throw new RuntimeException("Invalid password");
+    }
 }
