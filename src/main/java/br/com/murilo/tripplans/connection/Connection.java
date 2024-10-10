@@ -1,5 +1,6 @@
 package br.com.murilo.tripplans.connection;
 
+import br.com.murilo.tripplans.file.MyFile;
 import br.com.murilo.tripplans.user.User;
 import jakarta.persistence.*;
 
@@ -25,6 +26,9 @@ public class Connection {
     private List<User> users;
 
     private LocalDateTime connectedAt;
+
+    @OneToMany(mappedBy = "connection", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<MyFile> files;
 
     public UUID getId() {
         return connection_id;
@@ -72,5 +76,13 @@ public class Connection {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public List<MyFile> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<MyFile> files) {
+        this.files = files;
     }
 }
